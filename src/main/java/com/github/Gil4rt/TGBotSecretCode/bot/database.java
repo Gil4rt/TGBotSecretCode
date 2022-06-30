@@ -1,22 +1,29 @@
 package com.github.Gil4rt.TGBotSecretCode.bot;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class database {
 
-    private int adminId, statsAnyWord, statsSayedSecretWord, statsJoinedGroup;
+    final public String databaseName = "src/main/java/com/github/Gil4rt/TGBotSecretCode/bot/database/database.txt";
+    private int statsAnyWord, statsSayedSecretWord, statsJoinedGroup;
+
+    public long adminId;
     private String secretWord;
 
-    public String allData = String.valueOf(adminId) + " "
-            + String.valueOf(statsAnyWord) + " "
-            + String.valueOf(statsSayedSecretWord) + " "
-            + String.valueOf(statsJoinedGroup) + " " + secretWord;
+    File file = new File(databaseName);
+
+    public String allData = Long.toString(adminId) + "\r\n"
+            + String.valueOf(statsAnyWord) + "\r\n"
+            + String.valueOf(statsSayedSecretWord) + "\r\n"
+            + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
+
+    public String[] linesArr;
 
 
-    public int getAdminId() {
+    public long getAdminId() {
         return adminId;
     }
 
@@ -36,17 +43,14 @@ public class database {
         return secretWord;
     }
 
-    public void createDatabase() throws IOException {
+    public void callDatabase() throws IOException {
 
-        File file = new File("database.txt");
         boolean result;
 
         try {
             result = file.createNewFile();
             if (result)
             {
-                System.out.println("file created " + file.getCanonicalPath());
-
                 FileWriter fr = new FileWriter(file, true);
                 BufferedWriter br = new BufferedWriter(fr);
                 br.write(allData);
@@ -55,10 +59,52 @@ public class database {
                 fr.close();
 
             } else {
-                System.out.println("File already exist at location: " + file.getCanonicalPath());
+
+                Path filePath = Path.of(databaseName);
+
+                String content = Files.readString(filePath);
+
+                String inputStr = content;
+                linesArr = inputStr.lines().toArray(String[]::new);
+
+                adminId = Long.parseLong(linesArr[0]);
+                statsAnyWord = Integer.parseInt(linesArr[1]);
+                statsSayedSecretWord = Integer.parseInt(linesArr[2]);
+                statsJoinedGroup = Integer.parseInt(linesArr[3]);
+                secretWord = linesArr[4];
+
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void updateDatabase() {
+
+        try {
+            allData = String.valueOf(adminId) + "\r\n"
+                    + String.valueOf(statsAnyWord) + "\r\n"
+                    + String.valueOf(statsSayedSecretWord) + "\r\n"
+                    + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
+
+            adminId = Long.parseLong(linesArr[0]);
+            statsAnyWord = Integer.parseInt(linesArr[1]);
+            statsSayedSecretWord = Integer.parseInt(linesArr[2]);
+            statsJoinedGroup = Integer.parseInt(linesArr[3]);
+            secretWord = linesArr[4];
+
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter br = new BufferedWriter(fr);
+
+            PrintWriter writer = new PrintWriter(file);
+            writer.print("");
+            writer.close();
+
+            br.write(allData);
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

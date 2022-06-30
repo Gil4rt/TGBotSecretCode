@@ -29,8 +29,10 @@ public class botSecretCode extends TelegramLongPollingBot {
 
         String message_text = update.getMessage().getText();
         String chatId = update.getMessage().getChatId().toString();
-        final long adminId = 857918828;
+
         long getUserId = update.getMessage().getChatId();
+
+        long adminId = db.getAdminId();
 
         if (update.getMessage().getText().equals("/start"))
         {
