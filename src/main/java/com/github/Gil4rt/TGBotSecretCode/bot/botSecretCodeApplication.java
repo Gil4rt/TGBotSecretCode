@@ -6,19 +6,9 @@ import org.springframework.boot.SpringApplication;
 import java.io.IOException;
 
 @SpringBootApplication
-public class botSecretCodeApplication {
+public class BotSecretCodeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(botSecretCodeApplication.class, args);
-
-        database db = new database();
-
-        try {
-            db.createDatabaseAndParse();
-            db.setVariableByParse();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        SpringApplication.run(BotSecretCodeApplication.class, args);
     }
 }

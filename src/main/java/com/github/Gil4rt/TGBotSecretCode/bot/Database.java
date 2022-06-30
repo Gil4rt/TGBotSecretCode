@@ -3,11 +3,11 @@ package com.github.Gil4rt.TGBotSecretCode.bot;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 
-public class database {
+public class Database {
 
     final public String databaseName = "src/main/java/com/github/Gil4rt/TGBotSecretCode/bot/database/database.txt";
+    final private Path filePath = Path.of(databaseName);
     private int statsAnyWord, statsSayedSecretWord, statsJoinedGroup;
 
     public long adminId;
@@ -20,10 +20,20 @@ public class database {
             + String.valueOf(statsSayedSecretWord) + "\r\n"
             + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
 
+    public String inputStr;
     public String[] linesArr;
 
 
+    public void parseDataToDb() throws IOException {
+
+        inputStr = Files.readString(filePath);
+        linesArr = inputStr.lines().toArray(String[]::new);
+
+    }
+
+
     public long getAdminId() {
+
         adminId = Long.parseLong(linesArr[0]);
         return adminId;
     }
@@ -39,13 +49,29 @@ public class database {
     }
 
     public int getStatsJoinedGroup() {
-        statsJoinedGroup = Integer.parseInt(linesArr[3]);
+       statsJoinedGroup = Integer.parseInt(linesArr[3]);
         return statsJoinedGroup;
     }
 
     public String getSecretWord() {
         secretWord = linesArr[4];
         return secretWord;
+    }
+    public void saveSecretWord(String newSecretWord) {
+        linesArr[4] = newSecretWord;
+        secretWord = newSecretWord;
+    }
+    public void saveStatsAnyWord(){
+        statsAnyWord +=1;
+        linesArr[1] = String.valueOf(statsAnyWord);
+    }
+    public void saveStatsSayedSecretWord(){
+        statsSayedSecretWord +=1;
+        linesArr[2] = String.valueOf(statsSayedSecretWord);
+    }
+    public void saveStatsJoinedGroup(){
+        statsJoinedGroup +=1;
+        linesArr[3] = String.valueOf(statsJoinedGroup);
     }
 
     public void createDatabaseAndParse() throws IOException {
@@ -62,15 +88,6 @@ public class database {
 
                 br.close();
                 fr.close();
-
-            } else {
-
-                Path filePath = Path.of(databaseName);
-
-                String content = Files.readString(filePath);
-
-                String inputStr = content;
-                linesArr = inputStr.lines().toArray(String[]::new);
 
             }
         } catch (IOException e) {
