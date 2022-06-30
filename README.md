@@ -8,4 +8,5 @@
 
 Со стороны клиента только ввод секретного слова
 
-![image](https://user-images.githubusercontent.com/72715055/176788359-055c0b9f-2624-4f0d-974e-9eb5e9e4c351.png)
+![image](https://user-images.githubusercontent.com/72715055/176788451-c924d270-3cbc-481c-b5be-21b58a2f80e0.png)
+
