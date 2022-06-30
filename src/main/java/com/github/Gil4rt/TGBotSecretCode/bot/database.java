@@ -81,16 +81,11 @@ public class database {
     public void updateDatabase() {
 
         try {
+
             allData = String.valueOf(adminId) + "\r\n"
                     + String.valueOf(statsAnyWord) + "\r\n"
                     + String.valueOf(statsSayedSecretWord) + "\r\n"
                     + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
-
-            adminId = Long.parseLong(linesArr[0]);
-            statsAnyWord = Integer.parseInt(linesArr[1]);
-            statsSayedSecretWord = Integer.parseInt(linesArr[2]);
-            statsJoinedGroup = Integer.parseInt(linesArr[3]);
-            secretWord = linesArr[4];
 
             FileWriter fr = new FileWriter(file, true);
             BufferedWriter br = new BufferedWriter(fr);
