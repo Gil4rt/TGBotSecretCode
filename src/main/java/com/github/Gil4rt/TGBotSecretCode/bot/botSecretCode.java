@@ -36,7 +36,7 @@ public class botSecretCode extends TelegramLongPollingBot {
 
         if (update.getMessage().getText().equals("/start"))
         {
-            SendMessage message = new SendMessage();// Create a message object object
+            SendMessage message = new SendMessage();
 
             if(getUserId == adminId)
             {
@@ -46,32 +46,22 @@ public class botSecretCode extends TelegramLongPollingBot {
                 message.setChatId(chatId);
                 message.setText("Привет");
 
-                // Create ReplyKeyboardMarkup object
                 ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-                // Create the keyboard (list of keyboard rows)
                 List<KeyboardRow> keyboard = new ArrayList<>();
-                // Create a keyboard row
                 KeyboardRow row = new KeyboardRow();
-                // Set each button, you can also use KeyboardButton objects if you need something else than text
-                row.add("Row 1 Button 1");
-                row.add("Row 1 Button 2");
-                row.add("Row 1 Button 3");
-                // Add the first row to the keyboard
+                row.add("Ебанная кнопка ");
+                row.add("Ебанная кнопка ");
+                row.add("Ебанная кнопка ");
                 keyboard.add(row);
-                // Create another keyboard row
                 row = new KeyboardRow();
-                // Set each button for the second line
-                row.add("Row 2 Button 1");
-                row.add("Row 2 Button 2");
-                row.add("Row 2 Button 3");
-                // Add the second row to the keyboard
+                row.add("Ебанная кнопка ");
+                row.add("Ебанная кнопка ");
+                row.add("Ебанная кнопка ");
                 keyboard.add(row);
-                // Set the keyboard to the markup
                 keyboardMarkup.setKeyboard(keyboard);
-                // Add it to the message
                 message.setReplyMarkup(keyboardMarkup);
                 try {
-                    execute(message); // Sending our message object to user
+                    execute(message);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -87,7 +77,7 @@ public class botSecretCode extends TelegramLongPollingBot {
             message.setChatId(chatId);
             message.setText("Неизвестная команда \uD83D\uDE4B\u200D♀️");
             try {
-                execute(message); // Sending our message object to user
+                execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -105,16 +95,13 @@ public class botSecretCode extends TelegramLongPollingBot {
         row.add("Изменить секретное слово");
         keyboard.add(row);
         row = new KeyboardRow();
-        // Set each button for the second line
         row.add("Отобразить статистику");
-        // Add the second row to the keyboard
         keyboard.add(row);
-
         keyboardMarkup.setKeyboard(keyboard);
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            execute(message); // Sending our message object to user
+            execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
