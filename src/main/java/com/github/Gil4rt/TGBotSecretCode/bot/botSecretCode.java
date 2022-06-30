@@ -1,4 +1,4 @@
-package com.github.Gil4rt.botSecretCode.bot;
+package com.github.Gil4rt.TGBotSecretCode.bot;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class botSecretCode extends TelegramLongPollingBot {
 
     @Value("${bot.username}")
     private String username;
+
+    database db = new database();
 
     @Value("${bot.token}")
     private String token;
@@ -72,11 +75,26 @@ public class botSecretCode extends TelegramLongPollingBot {
                 }
             }
         }
+        else if(update.getMessage().getText().equals("Изменить секретное слово") && getUserId == adminId)
+        {
+
+        }
+        else
+        {
+            SendMessage message = new SendMessage();
+            message.setChatId(chatId);
+            message.setText("Неизвестная команда \uD83D\uDE4B\u200D♀️");
+            try {
+                execute(message); // Sending our message object to user
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void AdminPanelShow(String chatId, SendMessage message)
     {
         message.setChatId(chatId);
-        message.setText("Привет Администратор!");
+        message.setText("Привет Администратор! \uD83D\uDE0E ");
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
