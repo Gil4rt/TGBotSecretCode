@@ -24,26 +24,31 @@ public class database {
 
 
     public long getAdminId() {
+        adminId = Long.parseLong(linesArr[0]);
         return adminId;
     }
 
     public int getStatsAnyWord() {
+        statsAnyWord = Integer.parseInt(linesArr[1]);
         return statsAnyWord;
     }
 
     public int getStatsSayedSecretWord() {
+        statsSayedSecretWord = Integer.parseInt(linesArr[2]);
         return statsSayedSecretWord;
     }
 
     public int getStatsJoinedGroup() {
+        statsJoinedGroup = Integer.parseInt(linesArr[3]);
         return statsJoinedGroup;
     }
 
     public String getSecretWord() {
+        secretWord = linesArr[4];
         return secretWord;
     }
 
-    public void callDatabase() throws IOException {
+    public void createDatabaseAndParse() throws IOException {
 
         boolean result;
 
@@ -67,39 +72,27 @@ public class database {
                 String inputStr = content;
                 linesArr = inputStr.lines().toArray(String[]::new);
 
-                adminId = Long.parseLong(linesArr[0]);
-                statsAnyWord = Integer.parseInt(linesArr[1]);
-                statsSayedSecretWord = Integer.parseInt(linesArr[2]);
-                statsJoinedGroup = Integer.parseInt(linesArr[3]);
-                secretWord = linesArr[4];
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void updateDatabase() {
+    public void updateDatabase() throws IOException {
 
-        try {
+        allData = String.valueOf(adminId) + "\r\n"
+                + String.valueOf(statsAnyWord) + "\r\n"
+                + String.valueOf(statsSayedSecretWord) + "\r\n"
+                + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
 
-            allData = String.valueOf(adminId) + "\r\n"
-                    + String.valueOf(statsAnyWord) + "\r\n"
-                    + String.valueOf(statsSayedSecretWord) + "\r\n"
-                    + String.valueOf(statsJoinedGroup) + "\r\n" + secretWord;
+        FileWriter fr = new FileWriter(file, true);
+        BufferedWriter br = new BufferedWriter(fr);
 
-            FileWriter fr = new FileWriter(file, true);
-            BufferedWriter br = new BufferedWriter(fr);
+        PrintWriter writer = new PrintWriter(file);
+        writer.print("");
+        writer.close();
 
-            PrintWriter writer = new PrintWriter(file);
-            writer.print("");
-            writer.close();
-
-            br.write(allData);
-            br.close();
-            fr.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        br.write(allData);
+        br.close();
+        fr.close();
     }
 }

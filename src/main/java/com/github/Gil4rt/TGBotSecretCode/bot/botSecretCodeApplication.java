@@ -14,8 +14,8 @@ public class botSecretCodeApplication {
         database db = new database();
 
         try {
-            db.callDatabase();
-            db.updateDatabase();
+            db.createDatabaseAndParse();
+            db.setVariableByParse();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
